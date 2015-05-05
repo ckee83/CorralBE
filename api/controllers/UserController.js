@@ -43,6 +43,22 @@ module.exports = {
 				user: user
 			});
 		});
+	},
+	update: function(req, res, next){
+		User.update(req.params.id,req.allParams()).exec(function(err){
+			if (err)
+				res.redirect('/user/edit/'+req.params.id);
+			res.redirect('/user/show/'+req.params.id);
+		});
+	},
+	index: function(req, res, next){
+		User.find(function(err, users){
+			if (err)
+				return next(err);
+			res.view({
+				users: users
+			});
+		})
 	}
 };
 

@@ -24,4 +24,21 @@ $(document).ready(function(){
 			element.addClass('valid');
 		}
 	});
+	$('.validateEditForm').validate({
+		rules: {
+			firstName: {
+				required: true
+			},
+			lastName: {
+				required: true
+			},
+			email: {
+				required: true,
+				email: true
+			}
+		},
+		success: function(element){
+			element.addClass('valid');
+		}
+	});
 });
