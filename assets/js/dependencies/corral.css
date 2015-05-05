@@ -1,0 +1,24 @@
+#navSpacer {
+	height: 50px;
+	background-color: blue;
+}
+
+#registerTron {
+	margin-top: 50px;
+	border-radius: 5px;
+}
+
+#registerTron .jumbotron {
+	text-align: center;
+}
+
+#regForm {
+	margin: 0 auto;
+	margin-top: 50px;
+	padding: 15px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	background-color: lightgrey;
+	width: 400px;
+	text-align: center;
+}

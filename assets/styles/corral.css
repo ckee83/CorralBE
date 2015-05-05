@@ -1,0 +1,44 @@
+#navSpacer {
+	height: 50px;
+	background-color: blue;
+}
+
+#footerLeft {
+	padding: 15px 0;
+}
+
+#registerTron {
+	margin-top: 50px;
+	border-radius: 5px;
+}
+
+#registerTron .jumbotron {
+	text-align: center;
+}
+
+#regForm {
+	margin: 0 auto;
+	margin-top: 50px;
+	padding: 15px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	background-color: lightgrey;
+	width: 400px;
+	text-align: center;
+}
+
+#profileContainer {
+	margin: 0 auto;
+	margin-top: 50px;
+	text-align: center;
+	padding: 15px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	background-color: lightgrey;
+	width: 600px;
+}
+
+#summaryTitle {
+	font-size: 30px;
+	font-weight: bold;
+}
