@@ -27,6 +27,16 @@ module.exports = {
   	encryptedPW: {
   		type: 'string'
   	}
+  },
+  beforeCreate: function(values, next){
+    if (!values.pw || values.pw != values.pwConfirm)
+      return next({err: ["Passwords don't match!"]});
+    require('bcrypt').hash(values.pw, 10, function(err, ePW){
+      if (err)
+        return next(err);
+      values.encryptedPW=ePW;
+      next();
+    });
   }
 };
 
