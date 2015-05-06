@@ -51,6 +51,13 @@ module.exports = {
 			res.redirect('/user/show/'+req.params.id);
 		});
 	},
+	delete: function(req, res, next){
+		User.destroy(req.params.id).exec(function(err){
+			if (err)
+				res.next(err);
+			res.redirect('/user/index');
+		});
+	},
 	index: function(req, res, next){
 		User.find(function(err, users){
 			if (err)
