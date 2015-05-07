@@ -14,8 +14,6 @@ module.exports = {
 		param.firstName=capFirstLetter(param.firstName);
 		param.lastName=capFirstLetter(param.lastName);
 		param.mood="I'm new to Corral!";
-		param.dateCreated=new Date();
-		param.dateUpdated=new Date();
 		User.create(param, function userCreated(err,user){
 			if (err) {
 				console.log(err);
@@ -54,7 +52,6 @@ module.exports = {
 		var param = req.params.all();
 		param.firstName=capFirstLetter(param.firstName);
 		param.lastName=capFirstLetter(param.lastName);
-		param.dateUpdated=new Date();
 		User.update(req.params.id,param).exec(function(err){
 			if (err)
 				res.redirect('/user/edit/'+req.params.id);
@@ -70,6 +67,7 @@ module.exports = {
 	},
 	index: function(req, res, next){
 		User.find(function(err, users){
+			console.log(users);
 			if (err)
 				return next(err);
 			res.view({

@@ -29,13 +29,7 @@ module.exports = {
     },
   	encryptedPW: {
   		type: 'string'
-  	},
-    dateCreated: {
-      type: 'datetime'
-    },
-    dateUpdated: {
-      type: 'datetime'
-    }
+  	}
   },
   beforeCreate: function(values, next){
     if (!values.pw || values.pw != values.pwConfirm)

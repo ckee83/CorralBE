@@ -5,8 +5,8 @@
 	<h3> Name: <%= user.firstName %> <%= user.lastName %></h3>
 	<h3> Email: <%= user.email %></h3>
 	<h4> Mood: <%= user.mood %></h4>
-	<h5> Member since: <%= user.dateCreated.toDateString() %></h5>
-	<h5> Last Updated: <%= user.dateUpdated.toDateString() %></h5>
+	<h5> Member since: <%= user.createdAt.toDateString() %></h5>
+	<h5> Last Updated: <%= user.updatedAt.toDateString() %></h5>
 
 	<a class="btn btn-primary" href="../edit/<%= user.id %>">Edit</a>
 </div>

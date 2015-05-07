@@ -16,8 +16,8 @@
 					<td><%= users[i].firstName %> <%= users[i].lastName %></td>
 					<td><%= users[i].email %></td>
 					<td><%= users[i].mood %></td>
-					<td><%= users[i].dateCreated.toDateString() %></td>
-					<td><%= users[i].dateUpdated.toDateString() %></td>
+					<td><%= users[i].createdAt.toDateString() %></td>
+					<td><%= users[i].updatedAt.toDateString() %></td>
 					<td class="indexButtons">
 						<a class="btn btn-primary btn-xs" href="../user/show/<%= users[i].id %>">Show</a>
 						<a class="btn btn-success btn-xs" href="../user/edit/<%= users[i].id %>">Edit</a>
