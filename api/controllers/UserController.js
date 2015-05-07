@@ -67,7 +67,6 @@ module.exports = {
 	},
 	index: function(req, res, next){
 		User.find(function(err, users){
-			console.log(users);
 			if (err)
 				return next(err);
 			res.view({
