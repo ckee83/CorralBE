@@ -3,8 +3,11 @@
 		<table class="table table-striped table-hover table-responsive">
 			<tr>
 				<th>ID</th>
-				<th>Full Name</th>
+				<th>Name</th>
 				<th>Email</th>
+				<th>Mood</th>
+				<th>Member Since</th>
+				<th>Last Updated</th>
 				<th class="indexButtons"></th>
 			</tr>
 			<% for (var i=0; i<users.length; i++){ %>
@@ -12,6 +15,9 @@
 					<td><%= users[i].id %></td>
 					<td><%= users[i].firstName %> <%= users[i].lastName %></td>
 					<td><%= users[i].email %></td>
+					<td><%= users[i].mood %></td>
+					<td><%= users[i].dateCreated.toDateString() %></td>
+					<td><%= users[i].dateUpdated.toDateString() %></td>
 					<td class="indexButtons">
 						<a class="btn btn-primary btn-xs" href="../user/show/<%= users[i].id %>">Show</a>
 						<a class="btn btn-success btn-xs" href="../user/edit/<%= users[i].id %>">Edit</a>

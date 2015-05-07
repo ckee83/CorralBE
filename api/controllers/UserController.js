@@ -10,7 +10,13 @@ module.exports = {
 		res.view();
 	},
 	create: function(req, res, next){
-		User.create(req.params.all(), function userCreated(err,user){
+		var param = req.params.all();
+		param.firstName=capFirstLetter(param.firstName);
+		param.lastName=capFirstLetter(param.lastName);
+		param.mood="I'm new to Corral!";
+		param.dateCreated=new Date();
+		param.dateUpdated=new Date();
+		User.create(param, function userCreated(err,user){
 			if (err) {
 				console.log(err);
 				req.session.flash = {
@@ -45,7 +51,11 @@ module.exports = {
 		});
 	},
 	update: function(req, res, next){
-		User.update(req.params.id,req.allParams()).exec(function(err){
+		var param = req.params.all();
+		param.firstName=capFirstLetter(param.firstName);
+		param.lastName=capFirstLetter(param.lastName);
+		param.dateUpdated=new Date();
+		User.update(req.params.id,param).exec(function(err){
 			if (err)
 				res.redirect('/user/edit/'+req.params.id);
 			res.redirect('/user/show/'+req.params.id);
@@ -69,3 +79,6 @@ module.exports = {
 	}
 };
 
+function capFirstLetter(word){
+	return word.charAt(0).toUpperCase()+word.slice(1);
+}
