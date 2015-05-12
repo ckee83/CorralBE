@@ -57,6 +57,10 @@ module.exports = {
 				res.redirect('/user/show/'+user.id);
 			});
 		});
+	},
+	signout: function(req,res,next){
+		req.session.destroy();
+		res.redirect('/session/new');
 	}
 };
 
