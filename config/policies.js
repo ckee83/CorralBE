@@ -28,6 +28,7 @@ module.exports.policies = {
   '*': 'flash',
   user: {
     'new': 'flash',
+    'create': 'flash',
     '*': 'sessionAuth'
   }
   // '*': true,

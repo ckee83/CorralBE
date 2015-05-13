@@ -17,7 +17,7 @@ $(document).ready(function(){
 			},
 			pwConfirm: {
 				minlength: 6,
-				equalTo: '#pw'
+				equalTo: '.validateRegForm #pw'
 			}
 		},
 		success: function(element){

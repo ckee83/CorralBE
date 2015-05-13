@@ -23,6 +23,8 @@ module.exports = {
 
 				return res.redirect('/user/new');
 			}
+			req.session.authenticated=true;
+			req.session.user = user;
 			res.redirect('/user/show/'+user.id);
 		});
 	},

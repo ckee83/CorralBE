@@ -37,11 +37,46 @@
   </head>
 
   <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">Corral</a>
-      </div>
-    </div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Logo</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Corral</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if (!session.authenticated) { %>
+              <form action="/session/create" class="navbar-form">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="email" name="email" placeholder="Username or Email">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" id="pw" name="pw" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <a href="/user/new" class="btn btn-success">Register</a>
+              </form>
+            <% } else { %>
+              <form class="navbar-form">
+                Hello, <%= session.user.firstName %> <%= session.user.lastName %>!
+                <a href="/session/signout" class="btn btn-primary">Sign Out</a>
+              </form>
+            <% } %> 
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
     <div id="navSpacer"></div>
     
     <%- body %>
