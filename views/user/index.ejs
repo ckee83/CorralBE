@@ -6,6 +6,7 @@
 				<th>Name</th>
 				<th>Email</th>
 				<th>Mood</th>
+				<th>Type</th>
 				<th>Member Since</th>
 				<th>Last Updated</th>
 				<th class="indexButtons"></th>
@@ -16,6 +17,7 @@
 					<td><%= users[i].firstName %> <%= users[i].lastName %></td>
 					<td><%= users[i].email %></td>
 					<td><%= users[i].mood %></td>
+					<td><% if (users[i].admin) { %>Admin<% } else { %>User <% } %> </td>
 					<td><%= users[i].createdAt.toDateString() %></td>
 					<td><%= users[i].updatedAt.toDateString() %></td>
 					<td class="indexButtons">

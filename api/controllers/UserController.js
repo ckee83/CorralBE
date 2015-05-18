@@ -54,6 +54,10 @@ module.exports = {
 		var param = req.params.all();
 		param.firstName=capFirstLetter(param.firstName);
 		param.lastName=capFirstLetter(param.lastName);
+		if (param.admin==1)
+			param.admin=true;
+		else
+			param.admin=false;
 		User.update(req.params.id,param).exec(function(err){
 			if (err)
 				res.redirect('/user/edit/'+req.params.id);

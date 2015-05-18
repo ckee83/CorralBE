@@ -54,6 +54,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="/">Corral</a></li>
+            <% if (session.authenticated && session.user.admin) { %>
+              <li><a href="/user/index">User Administration</a></li>
+            <% } %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if (!session.authenticated) { %>
@@ -64,12 +67,16 @@
                 <div class="form-group">
                   <input type="password" class="form-control" id="pw" name="pw" placeholder="Password">
                 </div>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
                 <button type="submit" class="btn btn-primary">Sign In</button>
                 <a href="/user/new" class="btn btn-success">Register</a>
               </form>
             <% } else { %>
               <form class="navbar-form">
-                Hello, <%= session.user.firstName %> <%= session.user.lastName %>!
+                Hello, 
+                  <a href="/user/show/<%= session.user.id %>">
+                    <%= session.user.firstName %> <%= session.user.lastName %>
+                  </a>!
                 <a href="/session/signout" class="btn btn-primary">Sign Out</a>
               </form>
             <% } %> 

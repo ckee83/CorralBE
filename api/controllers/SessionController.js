@@ -54,6 +54,11 @@ module.exports = {
 				}
 				req.session.authenticated=true;
 				req.session.user = user;
+
+				if (user.admin){
+					res.redirect('/user/index');
+					return;
+				}
 				res.redirect('/user/show/'+user.id);
 			});
 		});

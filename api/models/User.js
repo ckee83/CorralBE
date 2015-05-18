@@ -29,7 +29,11 @@ module.exports = {
     },
   	encryptedPW: {
   		type: 'string'
-  	}
+  	},
+    admin: {
+      type: 'boolean',
+      defaultsTo: false
+    }
   },
   beforeCreate: function(values, next){
     if (!values.pw || values.pw != values.pwConfirm)
