@@ -2,6 +2,16 @@ module.exports = function(req, res, ok){
 	if (req.session.user && req.session.user.admin){
 		return ok();
 	}
+	else if (!req.session.authenticated){
+		req.session.flash = {
+			err: [
+					{
+						name: 'loginRequired',
+						message: 'You must sign in first'
+					}
+			]
+		};
+	}
 	else {
 		req.session.flash = {
 			err: [
@@ -11,6 +21,6 @@ module.exports = function(req, res, ok){
 				}
 			]
 		}
-		res.redirect('/session/new');
 	}
+	res.redirect('/session/new');
 }

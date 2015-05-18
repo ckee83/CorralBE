@@ -14,6 +14,9 @@ module.exports = {
 		param.firstName=capFirstLetter(param.firstName);
 		param.lastName=capFirstLetter(param.lastName);
 		param.mood="I'm new to Corral!";
+		// Uncomment the code below before starting the app to make an administrator account
+		// Don't forget to re-comment it after you're done
+		// param.admin=true;
 		User.create(param, function userCreated(err,user){
 			if (err) {
 				console.log(err);
