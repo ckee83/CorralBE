@@ -1,0 +1,54 @@
+<div class="content">
+	<form action="/friends/create/<%= req.params.id %>" method="POST" class="form-horizontal">
+	  <% if (flash && flash.err){ %>
+	  	<ul class="alert alert-danger">
+		  	<% flash.err.forEach(function(error){ %>
+		  		<li><%= error.message %></li>
+		  	<% }) %>
+	  	</ul>
+	  <% } %>
+	    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+	    <div class="row">
+		  <div class="col-lg-4 pull-right">
+		    <div class="input-group">
+		      <input type="email" id="email" name="email" class="form-control" placeholder="Enter friend Email...">
+		      <span class="input-group-btn">
+		        <button type="submit" class="btn btn-success">Add Friend</button>
+		      </span>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+	</form>
+	<div id="tableContainer">
+		<table class="table table-striped table-hover table-responsive">
+			<tr>
+				<th>ID</th>
+				<th>Friender ID</th>
+				<th>Friendee ID</th>
+				<th>Status</th>
+				<th>Favorite</th>
+				<th>Request Sent On</th>
+				<th>Last Updated</th>
+				<th class="indexButtons"></th>
+			</tr>
+			<% for (var i=0; friendList && i<friendList.length; i++){ %>
+				<tr>
+					<td><%= friendList[i].id %></td>
+					<td><%= friendList[i].friender %></td>
+					<td><%= friendList[i].friendee %></td>
+					<td><%= friendList[i].status %></td>
+					<td><%= friendList[i].favorite %></td>
+					<td><%= friendList[i].createdAt.toDateString() %></td>
+					<td><%= friendList[i].updatedAt.toDateString() %></td>
+					<td class="indexButtons">
+						<form action="/friends/delete/<%= friendList[i].friender %>" method="POST">
+							<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+							<input type="hidden" name="delFID" value="<%= friendList[i].id %>">
+			      			<button type="submit" class="btn btn-danger btn-xs">Delete</button>
+		      			</form>
+					</td>
+				</tr>
+			<% } %>
+		</table>
+	</div>
+</div>

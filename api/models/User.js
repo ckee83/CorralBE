@@ -33,6 +33,10 @@ module.exports = {
     admin: {
       type: 'boolean',
       defaultsTo: false
+    },
+    friends: {
+      collection: 'friends',
+      via: 'friender'
     }
   },
   beforeCreate: function(values, next){
