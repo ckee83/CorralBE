@@ -7,7 +7,8 @@
 
 module.exports = {
   schema: true,
-
+  autoPK: true,
+  
   attributes: {
   	friender: {
   		model: 'user'

@@ -12,13 +12,15 @@ module.exports = {
 		});
 	},
 	'create': function(req, res, next){
-		var param = req.allParams();
+		var param = {};
 		param.friender = req.params.id;
-		User.findOne({email: param.email}, function friendExists(err, user){
+		User.findOne({email: req.allParams().email}, function friendExists(err, user){
 			if (err)
 				return next(err);
-			else if (!user)
+			else if (!user){
+				console.log(err);
 				return next();
+			}
 			param.friendee = user.id;
 			if (param.friendee==param.friender){
 				req.session.flash = {
