@@ -59,27 +59,29 @@
             <% } %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <% if (!session.authenticated) { %>
-              <form action="/session/create" class="navbar-form">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Username or Email">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="pw" name="pw" placeholder="Password">
-                </div>
-                <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-                <button type="submit" class="btn btn-primary">Sign In</button>
-                <a href="/user/new" class="btn btn-success">Register</a>
-              </form>
-            <% } else { %>
-              <form class="navbar-form">
-                Hello, 
-                  <a href="/user/show/<%= session.user.id %>">
-                    <%= session.user.firstName %> <%= session.user.lastName %>
-                  </a>!
-                <a href="/session/signout" class="btn btn-primary">Sign Out</a>
-              </form>
-            <% } %> 
+            <li>
+              <% if (!session.authenticated) { %>
+                <form action="/session/create" class="navbar-form">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Username or Email">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control" id="pw" name="pw" placeholder="Password">
+                  </div>
+                  <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+                  <button type="submit" class="btn btn-primary">Sign In</button>
+                  <a href="/user/new" class="btn btn-success">Register</a>
+                </form>
+              <% } else { %>
+                <form class="navbar-form">
+                  Hello, 
+                    <a href="/user/show/<%= session.user.id %>">
+                      <%= session.user.firstName %> <%= session.user.lastName %>
+                    </a>!
+                  <a href="/session/signout" class="btn btn-primary">Sign Out</a>
+                </form>
+              <% } %> 
+            </li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->

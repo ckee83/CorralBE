@@ -35,25 +35,17 @@ module.exports = {
 					if (err)
 						console.log(err);
 				});
-				var temp = param.friendee;
-				param.friendee = param.friender;
-				param.friender = temp;
-				Friends.create(param, function madeFriendship(err, friendship){
-					if (err)
-						console.log(err);
-				});
 			}
 			res.redirect('friends/show/'+req.params.id);
 		});
 	},
 	'show': function(req, res, next){
-		User.find(req.params.id).populate('friends').exec(function(err, friendList){
+		Friends.find([{friender: req.params.id}, {friendee: req.params.id}]).exec(function(err, friendList){
 			if (err)
 				return next(err);
-			if (friendList[0]){
-				var friendArray = friendList[0].friends;
+			if (friendList){
 				res.view({
-					friendList: friendArray
+					friendList: friendList
 				});
 			}
 			else 
@@ -67,9 +59,35 @@ module.exports = {
 			res.redirect('/friends/show/'+req.params.id);
 		})
 	},
-	'kill': function(req, res, next){
-		Friends.destroy({});
-		res.redirect('/user/index');
+	'favorite': function(req, res, next){
+		Friends.findOne(req.param('favFID'),function foundIt(err, relation){
+			if (err)
+				return next(err);
+			if (req.params.id==relation.friender)
+				relation.favorer=!relation.favorer;
+			else
+				relation.favoree=!relation.favoree;
+			Friends.update(req.param('favFID'),relation,function updated(err, newRelation){
+				res.redirect('/friends/show/'+req.params.id);
+			});
+		});
+	},
+	'status': function(req, res, next){
+		Friends.findOne(req.param('FID'),function foundIt(err, relation){
+			if (err)
+				return next(err);
+			if (relation.friender==req.params.id){
+				Friends.destroy(req.param('FID')).exec(function(err){
+					res.redirect('/friends/show/'+req.params.id);
+				});
+			}
+			else {
+				relation.status=!relation.status;
+				Friends.update(req.param('FID'),relation,function updated(err, newRelation){
+					res.redirect('/friends/show/'+req.params.id);
+				});
+			}
+		});
 	}
 };
 

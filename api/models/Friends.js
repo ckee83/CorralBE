@@ -19,7 +19,11 @@ module.exports = {
   		type: 'boolean',
   		defaultsTo: false
   	},
-  	favorite: {
+  	favoree: {
+  		type: 'boolean',
+  		defaultsTo: false
+  	},
+  	favorer: {
   		type: 'boolean',
   		defaultsTo: false
   	}

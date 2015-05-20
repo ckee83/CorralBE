@@ -26,7 +26,8 @@
 				<th>Friender ID</th>
 				<th>Friendee ID</th>
 				<th>Status</th>
-				<th>Favorite</th>
+				<th>Favorer</th>
+				<th>Favoree</th>
 				<th>Request Sent On</th>
 				<th>Last Updated</th>
 				<th class="indexButtons"></th>
@@ -37,14 +38,32 @@
 					<td><%= friendList[i].friender %></td>
 					<td><%= friendList[i].friendee %></td>
 					<td><%= friendList[i].status %></td>
-					<td><%= friendList[i].favorite %></td>
+					<td><%= friendList[i].favorer %></td>
+					<td><%= friendList[i].favoree %></td>
 					<td><%= friendList[i].createdAt.toDateString() %></td>
 					<td><%= friendList[i].updatedAt.toDateString() %></td>
 					<td class="indexButtons">
-						<form action="/friends/delete/<%= friendList[i].friender %>" method="POST">
+						<% if (!friendList[i].status) { %>
+							<form action="/friends/status/<%= req.params.id %>" method="POST">
+								<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+								<input type="hidden" name="FID" value="<%= friendList[i].id %>">
+				      			<% if (friendList[i].friender==req.params.id) { %>
+				      				<button type="submit" class="btn btn-primary btn-xs pull-left">Undo Request</button>
+				      			<% } else { %> 
+				      				<button type="submit" class="btn btn-success btn-xs pull-left">Accept Request</button>
+				      			<% } %>
+			      			</form>
+			      		<% } else {%>
+						<form action="/friends/favorite/<%= req.params.id %>" method="POST">
+							<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+							<input type="hidden" name="favFID" value="<%= friendList[i].id %>">
+			      			<button type="submit" class="btn btn-warning btn-xs pull-left">Favorite</button>
+		      			</form>
+		      			<% } %>
+						<form action="/friends/delete/<%= req.params.id %>" method="POST">
 							<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
 							<input type="hidden" name="delFID" value="<%= friendList[i].id %>">
-			      			<button type="submit" class="btn btn-danger btn-xs">Delete</button>
+			      			<button type="submit" class="btn btn-danger btn-xs pull-left">Delete</button>
 		      			</form>
 					</td>
 				</tr>
