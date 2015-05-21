@@ -49,9 +49,6 @@ module.exports = {
 					return next(err);
 				if (!avail)
 					return next();
-				var theDate = avail.endDT;
-				avail.date = theDate.toISOString().substr(0,10);
-				avail.time = theDate.toLocaleTimeString();
 				res.view({
 					user: user,
 					avail: avail
