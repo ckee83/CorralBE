@@ -16,7 +16,8 @@ module.exports = {
 			defaultsTo: 0
 		},
 		endDT: {
-			type: 'datetime'
+			type: 'datetime',
+			defaultsTo: new Date()
 		}
 	}
 };
