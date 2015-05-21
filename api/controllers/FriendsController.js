@@ -6,11 +6,6 @@
  */
 
 module.exports = {
-	'new': function(req, res){
-		res.view({
-			adderID: req.params.id
-		});
-	},
 	'create': function(req, res, next){
 		var param = {};
 		param.friender = req.params.id;
