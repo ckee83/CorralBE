@@ -26,19 +26,33 @@ module.exports = {
 
 				return res.redirect('/user/new');
 			}
+			var avail = {
+				userID: user.id,
+				startDT: new Date(),
+				endDT: new Date()
+			}
+			Availability.create(avail);
 			req.session.authenticated=true;
 			req.session.user = user;
 			res.redirect('/user/show/'+user.id);
 		});
 	},
 	show: function(req, res, next){
-		User.findOne(req.params.id,function(err,user){
+		var userID = req.params.id;
+		User.findOne(userID,function(err,user){
 			if (err)
-				next(err);
+				return next(err);
 			if (!user)
-				next();
-			res.view({
-				user: user
+				return next();
+			Availability.findOrCreate({userID: userID},function foundIt(err, avail){
+				if (err)
+					return next(err);
+				if (!avail)
+					return next();
+				res.view({
+					user: user,
+					avail: avail
+				});
 			});
 		});
 	},

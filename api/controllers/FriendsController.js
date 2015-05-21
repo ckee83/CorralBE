@@ -28,7 +28,7 @@ module.exports = {
 				};
 			}
 			else {
-				Friends.create(param, function madeFriendship(err, friendship){
+				Friends.findOrCreate(param, function madeFriendship(err, friendship){
 					if (err)
 						console.log(err);
 				});
