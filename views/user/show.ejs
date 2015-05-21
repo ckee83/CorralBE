@@ -15,12 +15,13 @@
 	    	<option value="0" <% if (avail.status==0) { %>selected<% } %>>Schedule Mode</option>
 	    	<option value="1" <% if (avail.status==1) { %>selected<% } %>>Invisible Mode</option>
 	    	<option value="2" <% if (avail.status==2) { %>selected<% } %>>Forever Invisible</option>
-	    </select><br><br>
+	    </select>
+	    for 
 		  <div class="form-group">
-		    <label for="exampleInputName2">Minutes</label>
 		    <input type="number" class="form-control" id="mins" name="mins" value="" min="0">
+		    <label for="exampleInputName2">Minutes</label>
 		  </div>
-		  <button type="submit" class="btn btn-default">Set Time</button>
+		  <button type="submit" class="btn btn-success">Set Time</button>
 	</form><br>
 	<a class="btn btn-primary" href="../../friends/show/<%= user.id %>">Manage Friendships</a>
 </div>
