@@ -7,6 +7,25 @@
 	<h4> Mood: <%= user.mood %></h4>
 	<h5> Member since: <%= user.createdAt.toDateString() %></h5>
 	<h5> Last Updated: <%= user.updatedAt.toDateString() %></h5>
-
+	<h5> Status Datetime: <%= avail.endDT %></h5><br>
+	<form action="/availability/setAvailability/<%= user.id %>" method="POST" class="form-inline">
+	    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+	    <select id="status" name="status">
+	    	<option value="-2" <% if (avail.status==-2) { %>selected<% } %>>Forever Free</option>
+	    	<option value="-1" <% if (avail.status==-1) { %>selected<% } %>>Free Mode</option>
+	    	<option value="0" <% if (avail.status==0) { %>selected<% } %>>Schedule Mode</option>
+	    	<option value="1" <% if (avail.status==1) { %>selected<% } %>>Invisible Mode</option>
+	    	<option value="2" <% if (avail.status==2) { %>selected<% } %>>Forever Invisible</option>
+	    </select><br><br>
+		  <div class="form-group">
+		    <label for="exampleInputName2">Date</label>
+		    <input type="date" class="form-control" id="date" name="date" value="<%= avail.date %>">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleInputEmail2">Time</label>
+		    <input type="time" class="form-control" id="time" name="time" value="<%= avail.time %>">
+		  </div>
+		  <button type="submit" class="btn btn-default">Set Availability</button>
+	</form><br>
 	<a class="btn btn-primary" href="../../friends/show/<%= user.id %>">Manage Friendships</a>
 </div>
