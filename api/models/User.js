@@ -37,6 +37,14 @@ module.exports = {
     friends: {
       collection: 'friends',
       via: 'friender'
+    },
+    availability: {
+      type: 'json',
+      required: true
+    },
+    schedule: {
+      type: 'json',
+      required: true
     }
   },
   beforeCreate: function(values, next){

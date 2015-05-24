@@ -7,19 +7,19 @@
 	<h4> Mood: <%= user.mood %></h4>
 	<h5> Member since: <%= user.createdAt.toDateString() %></h5>
 	<h5> Last Updated: <%= user.updatedAt.toDateString() %></h5><br>
-	<form action="/availability/setAvailability/<%= user.id %>" method="POST" class="form-inline">
+	<form action="/user/setAvailability/<%= user.id %>" method="POST" class="form-inline">
 	    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
 	    <select id="status" name="status">
-	    	<option value="-2" <% if (avail.status==-2) { %>selected<% } %>>Forever Free</option>
-	    	<option value="-1" <% if (avail.status==-1) { %>selected<% } %>>Free Mode</option>
-	    	<option value="0" <% if (avail.status==0) { %>selected<% } %>>Schedule Mode</option>
-	    	<option value="1" <% if (avail.status==1) { %>selected<% } %>>Invisible Mode</option>
-	    	<option value="2" <% if (avail.status==2) { %>selected<% } %>>Forever Invisible</option>
+	    	<option value="-2" <% if (user.availability.status==-2) { %>selected<% } %>>Forever Free</option>
+	    	<option value="-1" <% if (user.availability.status==-1) { %>selected<% } %>>Free Mode</option>
+	    	<option value="0" <% if (user.availability.status==0) { %>selected<% } %>>Schedule Mode</option>
+	    	<option value="1" <% if (user.availability.status==1) { %>selected<% } %>>Invisible Mode</option>
+	    	<option value="2" <% if (user.availability.status==2) { %>selected<% } %>>Forever Invisible</option>
 	    </select>
 	    for 
 		  <div class="form-group">
 		    <input type="number" class="form-control" id="mins" name="mins" value="" min="0">
-		    <label for="exampleInputName2">Minutes</label>
+		    <label for="mins">Minutes</label>
 		  </div>
 		  <button type="submit" class="btn btn-success">Set Time</button>
 	</form><br>

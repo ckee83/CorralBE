@@ -26,6 +26,7 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
   '*': 'flash',
+
   user: {
     'new': 'flash',
     'create': 'flash',
@@ -34,6 +35,10 @@ module.exports.policies = {
     'edit': 'userScope',
     'update': 'userScope',
     '*': 'sessionAuth'
+  },
+
+  friends: {
+    '*': ['flash','userScope']
   }
   // '*': true,
 

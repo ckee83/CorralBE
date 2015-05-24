@@ -14,6 +14,19 @@ module.exports = {
 		param.firstName=capFirstLetter(param.firstName);
 		param.lastName=capFirstLetter(param.lastName);
 		param.mood="I'm new to Corral!";
+		param.availability={
+			status: 0,
+			endDT: new Date()
+		};
+		param.schedule={
+			'0':{},
+			'1':{},
+			'2':{},
+			'3':{},
+			'4':{},
+			'5':{},
+			'6':{},
+		};
 		// Uncomment the code below before starting the app to make an administrator account
 		// Don't forget to re-comment it after you're done
 		// param.admin=true;
@@ -26,12 +39,6 @@ module.exports = {
 
 				return res.redirect('/user/new');
 			}
-			var avail = {
-				userID: user.id,
-				startDT: new Date(),
-				endDT: new Date()
-			}
-			Availability.create(avail);
 			req.session.authenticated=true;
 			req.session.user = user;
 			res.redirect('/user/show/'+user.id);
@@ -44,15 +51,8 @@ module.exports = {
 				return next(err);
 			if (!user)
 				return next();
-			Availability.findOrCreate({userID: userID},function foundIt(err, avail){
-				if (err)
-					return next(err);
-				if (!avail)
-					return next();
-				res.view({
-					user: user,
-					avail: avail
-				});
+			res.view({
+				user: user
 			});
 		});
 	},
@@ -96,9 +96,40 @@ module.exports = {
 				users: users
 			});
 		})
+	},
+	'setAvailability': function(req, res, next){
+		var userID = req.params.id;
+		var status = req.param('status');
+		var mins = req.param('mins');
+		var endDT = new Date();
+		endDT = new Date(endDT.getTime()+mins*60000);
+
+		User.update(userID, {availability:{status: status, endDT: endDT}}, function(err, user){
+			if (err)
+				return next(err);
+			if (!user)
+				return next();
+			res.redirect('/user/show/'+userID);
+
+		});
 	}
 };
 
 function capFirstLetter(word){
 	return word.charAt(0).toUpperCase()+word.slice(1);
+}
+
+// Note: date and time should be passed directly from inputs
+function isBusy(user, date, time){
+	var date = date.split('-');
+	var time = time.split(':');
+	var checkDT = new Date(date[0], date[1]-1, date[2], time[0], time[1], time[2]);
+	var dayOfWeek = user.schedule[checkDT.getDay()];
+	for (var item in dayOfWeek){
+		var sDT = new Date(item.startTime);
+		var eDT = new Date(item.endTime)
+		if (sDT <= checkDT && checkDT <= eDT)
+			return true;
+	}
+	return false;
 }
