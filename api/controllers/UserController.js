@@ -18,15 +18,6 @@ module.exports = {
 			status: 0,
 			endDT: new Date()
 		};
-		param.schedule={
-			'0':{},
-			'1':{},
-			'2':{},
-			'3':{},
-			'4':{},
-			'5':{},
-			'6':{},
-		};
 		// Uncomment the code below before starting the app to make an administrator account
 		// Don't forget to re-comment it after you're done
 		// param.admin=true;

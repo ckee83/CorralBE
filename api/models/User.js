@@ -43,8 +43,8 @@ module.exports = {
       required: true
     },
     schedule: {
-      type: 'json',
-      required: true
+      collection: 'schedule',
+      via: 'userID'
     }
   },
   beforeCreate: function(values, next){
