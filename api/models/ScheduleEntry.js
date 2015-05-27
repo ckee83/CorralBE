@@ -13,6 +13,10 @@ module.exports = {
   	scheduleID: {
   		model: 'schedule'
   	},
+    description: {
+      type: 'string',
+      defaultsTo: "Busy doing something"
+    },
   	dayOfWeek: {
   		type: 'integer'
   	},

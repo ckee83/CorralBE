@@ -1,0 +1,64 @@
+<div class="content">
+	<form action="/schedule/create/<%= req.params.id %>" method="POST" class="form-horizontal">
+	  <% if (flash && flash.err){ %>
+	  	<ul class="alert alert-danger">
+		  	<% flash.err.forEach(function(error){ %>
+		  		<li><%= error.message %></li>
+		  	<% }) %>
+	  	</ul>
+	  <% } %>
+	    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+	    <div class="row">
+		  <div class="col-lg-4 pull-right">
+		    <div class="input-group">
+			    <div class="input-group">
+			      <input type="text" name="title" class="form-control" aria-label="title" placeholder="Enter Schedule Title">
+			      <span class="input-group-addon">
+			        <input type="radio" name="weekOrMonth" aria-label="weekOrMonth">  Weekly
+			        <input type="radio" name="weekOrMonth" aria-label="weekOrMonth">  Monthly
+			      </span>
+			    </div><!-- /input-group -->
+		      <span class="input-group-btn">
+		        <button type="submit" class="btn btn-success">Add Schedule</button>
+		      </span>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+	</form>
+	<div id="tableContainer">
+		<% for (var i=0; schedules && i<schedules.length; i++){ %>
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title"><%= schedules[i].title %></h3>
+			  </div>
+			  <div class="panel-body">
+			  <table class="table table-bordered table-hover table-condensed">
+				<tr>
+					<th>Sunday</th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Saturday</th>
+				</tr>
+				<tr>
+					<!-- 
+						Figure out how to store each entry to their respective days (or entry, if monthly)
+						Need them to be in acsending order (array) for each day (.sunday, .saturday, etc.)
+					 -->
+					 <% for (var entry in schedules.entries) { %>
+						<td>
+							<%= entry %>
+						</td>
+					 <% } %>
+				</tr>
+			  </table>
+
+
+
+			  </div>
+			</div>
+		<% } %>
+	</div>
+</div>

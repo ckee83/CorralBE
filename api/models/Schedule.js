@@ -15,7 +15,7 @@ module.exports = {
   	},
   	title: {
   		type: 'string',
-  		defaultsTo: 'My Reoccuring Schedule',
+  		defaultsTo: 'My Schedule',
   		required: true
   	},
   	weekOrMonth: {
