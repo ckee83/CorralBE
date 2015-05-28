@@ -12,7 +12,7 @@ module.exports = {
 		startDT.setHours(tempTime[0]);
 		startDT.setMinutes(tempTime[1]);
 		startDT.setSeconds(0);
-		var endDT = new Date(startDT.getTime() +(req.param('duration')*60000));
+		var endDT = new Date(startDT.getTime()+(req.param('durHours')*3600*1000)+(req.param('durMinutes')*60000));
 		var entry = {
 			scheduleID: req.param('schID'),
 			description: req.param('description'),
@@ -29,7 +29,6 @@ module.exports = {
 		});
 	},
 	delete: function(req, res, next){
-		console.log(req.param('schID'));
 		ScheduleEntry.destroy({scheduleID: req.param('schID')},function(err){
 			if (err)
 				res.next(err);

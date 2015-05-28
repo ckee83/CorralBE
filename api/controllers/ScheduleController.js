@@ -27,6 +27,22 @@ module.exports = {
 					entries[i].endDT = new Date(entries[i].endDT);
 					var durationMins = entries[i].endDT-entries[i].startDT;
 					entries[i].duration = durationMins/60000;
+					var tHour=entries[i].startDT.getHours()%12==0?12:entries[i].startDT.getHours()%12;
+					var tMins=('0'+entries[i].startDT.getMinutes()).slice(-2);
+					var tAMPM;
+					if (entries[i].startDT.getHours()+1<12)
+						tAMPM='AM';
+					else 
+						tAMPM='PM';
+					entries[i].startTime = tHour+':'+tMins+' '+tAMPM;
+					tHour=entries[i].endDT.getHours()%12==0?12:entries[i].endDT.getHours()%12;
+					tMins=('0'+entries[i].endDT.getMinutes()).slice(-2);
+					tAMPM;
+					if (entries[i].endDT.getHours()+1<12)
+						tAMPM='AM';
+					else 
+						tAMPM='PM';
+					entries[i].endTime = tHour+':'+tMins+' '+tAMPM;
 				}
 				entries.sort(function(a,b){
 					if (a.startDT<b.startDT)
@@ -45,5 +61,12 @@ module.exports = {
 			});
 		});
 	},
+	delete: function(req, res, next){
+		Schedule.destroy({userID: req.params.id},function(err, schedules){
+			ScheduleEntry.destroy(schedules.id,function(err){
+			});
+			res.redirect('/schedule/index/'+req.params.id);
+		});
+	}
 };
 
