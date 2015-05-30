@@ -29,11 +29,9 @@ module.exports = {
 		});
 	},
 	delete: function(req, res, next){
-		ScheduleEntry.destroy({scheduleID: req.param('schID')},function(err){
-			if (err)
-				res.next(err);
+		ScheduleEntry.destroy(req.param('entryID'),function(err){
 			res.redirect('/schedule/index/'+req.params.id);
-		})
+		});
 	}
 };
 

@@ -49,3 +49,24 @@
 .indexButtons {
 	width: 200px;
 }
+
+.scheduleTable tr th, .scheduleTable tr td{
+	padding: 0px;
+	margin: 0px;
+}
+
+.dayWidth {
+	width: 175px;
+}
+.entryBar {
+	padding: 10px 0px;
+}
+
+.entryTitle {
+	width: 185px;
+	text-align: center;
+}
+
+.entryDel {
+	width: 20px;
+}

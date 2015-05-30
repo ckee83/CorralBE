@@ -25,8 +25,18 @@ module.exports = {
 				for (var i=0; i<entries.length; i++){
 					entries[i].startDT = new Date(entries[i].startDT);
 					entries[i].endDT = new Date(entries[i].endDT);
-					var durationMins = entries[i].endDT-entries[i].startDT;
-					entries[i].duration = durationMins/60000;
+					var durationMins = (entries[i].endDT-entries[i].startDT)/60000;
+					entries[i].duration = durationMins;
+					var color = '';
+					if (durationMins/60>6)
+						color='success';
+					else if (durationMins/60>4)
+						color='info';
+					else if (durationMins/60>2)
+						color='warning';
+					else
+						color='danger';
+					entries[i].color=color;
 					var tHour=entries[i].startDT.getHours()%12==0?12:entries[i].startDT.getHours()%12;
 					var tMins=('0'+entries[i].startDT.getMinutes()).slice(-2);
 					var tAMPM;
@@ -62,10 +72,10 @@ module.exports = {
 		});
 	},
 	delete: function(req, res, next){
-		Schedule.destroy({userID: req.params.id},function(err, schedules){
-			ScheduleEntry.destroy(schedules.id,function(err){
+		Schedule.destroy(req.param('schID'),function(err, schedules){
+			ScheduleEntry.destroy({scheduleID: schedules[0].id},function(err,entries){
+				res.redirect('/schedule/index/'+req.params.id);
 			});
-			res.redirect('/schedule/index/'+req.params.id);
 		});
 	}
 };

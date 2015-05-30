@@ -34,7 +34,7 @@
 				</h3>
 			  </div>
 			  <div class="panel-body">
-			  <table class="table table-bordered table-hover table-condensed">
+			  <table class="scheduleTable table table-bordered table-hover table-condensed">
 			  	<tr>
 			  		<td colspan="7">
 					  <form action="/scheduleentry/create/<%= req.params.id %>" method="POST" class="form-inline">
@@ -99,13 +99,13 @@
 			  		</td>
 			  	</tr>
 				<tr>
-					<th class="centerText">Sunday</th>
-					<th class="centerText">Monday</th>
-					<th class="centerText">Tuesday</th>
-					<th class="centerText">Wednesday</th>
-					<th class="centerText">Thursday</th>
-					<th class="centerText">Friday</th>
-					<th class="centerText">Saturday</th>
+					<th class="centerText dayWidth">Sunday</th>
+					<th class="centerText dayWidth">Monday</th>
+					<th class="centerText dayWidth">Tuesday</th>
+					<th class="centerText dayWidth">Wednesday</th>
+					<th class="centerText dayWidth">Thursday</th>
+					<th class="centerText dayWidth">Friday</th>
+					<th class="centerText dayWidth">Saturday</th>
 				</tr>
 				<tr>
 					<!-- 
@@ -113,10 +113,24 @@
 						Need them to be in acsending order (array) for each day (.sunday, .saturday, etc.)
 					 -->
 					 <% for (var entryInd=0, curEntries=schedules[i].entries; curEntries && entryInd< curEntries.length; entryInd++) { %>
-							<td>
+							<td class="dayWidth">
 								<% for (var dayInd=0, curDay=curEntries[entryInd]; dayInd<curDay.length; dayInd++) { %>
-									<%= curDay[dayInd].description %><br>
+									<div class="entryBlock bg-<%= curDay[dayInd].color %>" style="height: <%= curDay[dayInd].duration/2 %>px;" >
+									<div class="entryBar clearfix">
+										<div class="entryTitle pull-left">
+											<%= curDay[dayInd].description %>
+										</div>
+										<div class="entryDel pull-left">
+											<form action="/scheduleentry/delete/<%= req.params.id %>" method="POST">
+												<input type="hidden" name="entryID" value="<%= curDay[dayInd].id %>">
+							      				<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+							        			<button type="submit" class="btn btn-xs btn-danger">X</button>
+											</form>
+										</div>
+									</div>
 									<%= curDay[dayInd].startTime %> - <%= curDay[dayInd].endTime %>
+									<%= curDay[dayInd].duration %>
+									</div>
 								<% } %>
 							</td>
 					<% } %>
