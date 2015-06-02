@@ -103,6 +103,23 @@ module.exports = {
 			res.redirect('/user/show/'+userID);
 
 		});
+	},
+	'getAvailableFriends': function(req, res, next){
+		var userID = req.params.id;
+		var friends = [];
+		var friendArray = [];
+		Friends.find([{friender: userID}, {friendee: userID}], function(err, relations){
+			for (var i=0; i<relations.length; i++){
+				var curRelation=relations[i];
+				if (curRelation.friender!=userID)
+					friends.push(curRelation.friender);
+				else
+					friends.push(curRelation.friendee);
+			}
+			User.find(friends).populate('schedule').exec(function(err, friendsList){
+				console.log(friendsList);
+			});
+		});
 	}
 };
 

@@ -26,14 +26,15 @@ module.exports = {
 							}
 					]
 				};
+				res.redirect('friends/show/'+req.params.id);
 			}
 			else {
 				Friends.findOrCreate(param, function madeFriendship(err, friendship){
 					if (err)
 						console.log(err);
+					res.redirect('friends/show/'+req.params.id);
 				});
 			}
-			res.redirect('friends/show/'+req.params.id);
 		});
 	},
 	'show': function(req, res, next){

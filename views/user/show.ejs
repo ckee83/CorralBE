@@ -9,20 +9,33 @@
 	<h5> Last Updated: <%= user.updatedAt.toDateString() %></h5><br>
 	<form action="/user/setAvailability/<%= user.id %>" method="POST" class="form-inline">
 	    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-	    <select id="status" name="status">
-	    	<option value="-2" <% if (user.availability.status==-2) { %>selected<% } %>>Forever Free</option>
-	    	<option value="-1" <% if (user.availability.status==-1) { %>selected<% } %>>Free Mode</option>
-	    	<option value="0" <% if (user.availability.status==0) { %>selected<% } %>>Schedule Mode</option>
-	    	<option value="1" <% if (user.availability.status==1) { %>selected<% } %>>Invisible Mode</option>
-	    	<option value="2" <% if (user.availability.status==2) { %>selected<% } %>>Forever Invisible</option>
-	    </select>
+	    <div class="form-group">
+		    <select id="status" name="status" class="form-control">
+		    	<option value="-2" <% if (user.availability.status==-2) { %>selected<% } %>>Forever Free</option>
+		    	<option value="-1" <% if (user.availability.status==-1) { %>selected<% } %>>Free Mode</option>
+		    	<option value="0" <% if (user.availability.status==0) { %>selected<% } %>>Schedule Mode</option>
+		    	<option value="1" <% if (user.availability.status==1) { %>selected<% } %>>Invisible Mode</option>
+		    	<option value="2" <% if (user.availability.status==2) { %>selected<% } %>>Forever Invisible</option>
+		    </select>
+		</div>
 	    for 
 		  <div class="form-group">
-		    <input type="number" class="form-control" id="mins" name="mins" value="" min="0">
+		    <input type="number" class="form-control" id="mins" name="mins" value="0" min="0">
 		    <label for="mins">Minutes</label>
 		  </div>
-		  <button type="submit" class="btn btn-success">Set Time</button>
+		  <button type="submit" class="btn btn-default">Set Time</button>
 	</form><br>
+	<form action="/user/getAvailableFriends/<%= user.id %>" method="GET" class="form-inline">
+		<input type="date" class="form-control" value="<%= new Date().toISOString().slice(0,10) %>" min="<%= new Date().toISOString().slice(0,10) %>">
+		<input type="time" class="form-control" value="<%= new Date().toTimeString().slice(0,8) %>">
+		<button type="submit" class="btn btn-default">Who's Free</button>
+	</form><br>
+	<form action="/user/getAvailableFriends/<%= user.id %>" method="GET" class="form-inline">
+		<input type="hidden" class="form-control" value="<%= new Date().toISOString().slice(0,10) %>" min="<%= new Date().toISOString().slice(0,10) %>">
+		<input type="hidden" class="form-control" value="<%= new Date().toTimeString().slice(0,8) %>">
+		<button type="submit" class="btn btn-success">Who's Free Now</button>
+	</form>
+	<br>
 	<a class="btn btn-info" href="../../schedule/index/<%= user.id %>">Manage Schedules</a>
 	<a class="btn btn-primary" href="../../friends/show/<%= user.id %>">Manage Friendships</a>
 </div>
