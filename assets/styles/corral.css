@@ -58,15 +58,24 @@
 .dayWidth {
 	width: 175px;
 }
-.entryBar {
-	padding: 10px 0px;
+
+.entryBlock {
+	text-align: center;
+	border-radius: 5px;
+	overflow: hidden;
 }
 
 .entryTitle {
-	width: 185px;
 	text-align: center;
+	height: 18px;
+	font-weight: bold;
+	margin-top: -3px;
+	border-bottom: 1px solid white;
 }
 
 .entryDel {
+	position: absolute;
 	width: 20px;
+	margin-left: 140px;
+	margin-top: -3px;
 }

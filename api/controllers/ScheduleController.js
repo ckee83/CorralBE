@@ -9,8 +9,7 @@ module.exports = {
 	create: function(req, res, next){
 		var sch = {
 			userID: req.params.id,
-			title: req.param('title'),
-			dayOfWeek: req.param('weekOrMonth')
+			title: req.param('title')
 		};
 		Schedule.create(sch,function(err, schedule){
 			res.redirect('/schedule/index/'+req.params.id);
@@ -23,9 +22,9 @@ module.exports = {
 			for (var ind=0; ind<schedules.length; ind++){
 				var entries = schedules[ind].entries;
 				for (var i=0; i<entries.length; i++){
-					entries[i].startDT = new Date(entries[i].startDT);
-					entries[i].endDT = new Date(entries[i].endDT);
-					var durationMins = (entries[i].endDT-entries[i].startDT)/60000;
+					entries[i].start.dateTime = new Date(entries[i].start.dateTime);
+					entries[i].end.dateTime = new Date(entries[i].end.dateTime);
+					var durationMins = (entries[i].end.dateTime-entries[i].start.dateTime)/60000;
 					var color = '';
 					if (durationMins/60>6)
 						color='success';
@@ -36,57 +35,41 @@ module.exports = {
 					else
 						color='danger';
 					entries[i].color=color;
-					var tHour=entries[i].startDT.getHours()%12==0?12:entries[i].startDT.getHours()%12;
-					var tMins=('0'+entries[i].startDT.getMinutes()).slice(-2);
-					var tAMPM;
-					if (entries[i].startDT.getHours()+1<12)
-						tAMPM='AM';
-					else 
-						tAMPM='PM';
-					entries[i].startTime = tHour+':'+tMins+' '+tAMPM;
-					tHour=entries[i].endDT.getHours()%12==0?12:entries[i].endDT.getHours()%12;
-					tMins=('0'+entries[i].endDT.getMinutes()).slice(-2);
-					if (entries[i].endDT.getHours()+1<12)
-						tAMPM='AM';
-					else 
-						tAMPM='PM';
-					if (entries[i].startDT.getDay() < entries[i].endDT.getDay()){
-						var tstartDT = new Date(entries[i].startDT.getFullYear(), entries[i].startDT.getMonth(), entries[i].endDT.getDate(),0,0,0,0);
-						var tendDT = new Date(entries[i].endDT);
+					entries[i].startTime = formatAMPM(entries[i].start.dateTime);
+					if (entries[i].start.dateTime.getDay() < entries[i].end.dateTime.getDay()){
+						var tstartDT = new Date(entries[i].start.dateTime.getFullYear(), entries[i].start.dateTime.getMonth(), entries[i].end.dateTime.getDate(),0,0,0,0);
+						var tendDT = new Date(entries[i].end.dateTime);
 						var partTwo={
 							id: entries[i].id,
-							startDT: tstartDT,
-							endDT: tendDT,
+							summary: entries[i].summary,
+							location: entries[i].location,
+							start: {
+								dateTime: tstartDT
+							},
+							end: {
+								dateTime: tendDT
+							},
 							description: entries[i].description,
 							dayOfWeek: (entries[i].dayOfWeek+1)%7,
 							color: entries[i].color,
-							startTime: '12:00 AM',
-							endTime: tHour+':'+tMins+' '+tAMPM
+							startTime: formatAMPM(tstartDT),
+							endTime: formatAMPM(tendDT),
+							recurrence: entries[i].recurrence,
+							reminders: entries[i].reminders
 						};
 						entries.push(partTwo);
-						entries[i].endTime='12:00 AM';
-						entries[i].duration=Math.round((partTwo.startDT-entries[i].startDT)/60000);
-						// partTwo.startDT.setHours(0);
-						// partTwo.startDT.setMinutes(0);
-						// partTwo.startDT.setDate(partTwo.startDT.getDate());
-						// durationMins=(partTwo.startDT-entries[i].startDT)/60000;
-						// entries[i].duration = durationMins;
-						// entries[i].endTime = '12:00 AM';
-						// durationMins=(partTwo.endDT-partTwo.startDT)/60000;
-						// partTwo.duration=durationMins;
-						// entries.push(partTwo);
-						// console.log('Double Entry: '+entries[i]);
-						// console.log('Double Entry2: '+partTwo);
+						entries[i].endTime=formatAMPM(tstartDT),
+						entries[i].duration=Math.round((partTwo.start.dateTime-entries[i].start.dateTime)/60000);
 					}
 					else {
 						entries[i].duration = Math.round(durationMins);
-						entries[i].endTime = tHour+':'+tMins+' '+tAMPM;
+						entries[i].endTime = formatAMPM(entries[i].end.dateTime);
 					}
 				}
 				entries.sort(function(a,b){
-					if (a.startDT<b.startDT)
+					if (a.start.dateTime<b.start.dateTime)
 						return -1;
-					else if (a.startDT>b.startDT)
+					else if (a.start.dateTime>b.start.dateTime)
 						return 1;
 					else
 						return 0;
@@ -109,3 +92,13 @@ module.exports = {
 	}
 };
 
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}

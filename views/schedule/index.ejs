@@ -9,14 +9,10 @@
 	  <% } %>
 	    <input type="hidden" name="_csrf" value="<%= _csrf %>"/>
 	    <div class="row">
-		  <div class="col-lg-5 pull-right">
+		  <div class="col-lg-3 pull-right">
 		    <div class="input-group">
 			    <div class="input-group">
 			      <input type="text" name="title" class="form-control" aria-label="title" placeholder="Enter Schedule Title">
-			      <span class="input-group-addon">
-			        <input type="radio" name="weekOrMonth" value="false" aria-label="weekOrMonth" checked>  Weekly
-			        <input type="radio" name="weekOrMonth" value="true" aria-label="weekOrMonth">  Monthly
-			      </span>
 			      <span class="input-group-btn">
 			        <button type="submit" class="btn btn-success">Add Schedule</button>
 			      </span>
@@ -40,8 +36,12 @@
 					  <form action="/scheduleentry/create/<%= req.params.id %>" method="POST" class="form-inline">
 					  <div class="centerText">
 					    <div class="form-group">
+					    	Summary<br>
+					      <input type="text" name="summary" class="form-control pull-right" aria-label="title" placeholder="Entry Summary">
+					    </div>
+					    <div class="form-group">
 					    	Description<br>
-					      <input type="text" name="description" class="form-control pull-right" aria-label="title" placeholder="Enter Entry Description">
+					      <input type="text" name="description" class="form-control pull-right" aria-label="title" placeholder="Entry Description">
 					    </div>
 					    <div class="form-group">
 					    	Day<br>
@@ -114,22 +114,20 @@
 					 -->
 					 <% for (var entryInd=0, curEntries=schedules[i].entries; curEntries && entryInd< curEntries.length; entryInd++) { %>
 							<td class="dayWidth">
-								<% for (var dayInd=0, curDay=curEntries[entryInd]; dayInd<curDay.length; dayInd++) { %>
+								<% for (var dayInd=0, curDay=curEntries[entryInd], timeInd=0; dayInd<curDay.length; dayInd++) { %>
+									<% if (timeInd<curDay[dayInd].start.dateTime) {} %>
 									<div class="entryBlock bg-<%= curDay[dayInd].color %>" style="height: <%= curDay[dayInd].duration/2 %>px;" >
-									<div class="entryBar clearfix">
-										<div class="entryTitle pull-left">
-											<%= curDay[dayInd].description %>
-										</div>
-										<div class="entryDel pull-left">
+										<div class="entryDel">
 											<form action="/scheduleentry/delete/<%= req.params.id %>" method="POST">
 												<input type="hidden" name="entryID" value="<%= curDay[dayInd].id %>">
 							      				<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
-							        			<button type="submit" class="btn btn-xs btn-danger">X</button>
+							        			<button type="submit" class="btn btn-xs btn-link">X</button>
 											</form>
 										</div>
-									</div>
-									<%= curDay[dayInd].startTime %> - <%= curDay[dayInd].endTime %>
-									<%= curDay[dayInd].duration %>
+										<div class="entryTitle">
+											<%= curDay[dayInd].summary %>
+										</div>
+										<%= curDay[dayInd].startTime %> - <%= curDay[dayInd].endTime %>
 									</div>
 								<% } %>
 							</td>

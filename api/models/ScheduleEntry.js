@@ -13,18 +13,40 @@ module.exports = {
   	scheduleID: {
   		model: 'schedule'
   	},
+  	summary: {
+  		type: 'string',
+  		defaultsTo: 'Busy'
+  	},
+  	location: {
+  		type: 'string',
+  		defaultsTo: ''
+  	},
     description: {
-      type: 'string',
-      defaultsTo: "Busy doing something"
+      	type: 'string',
+      	defaultsTo: ''
     },
   	dayOfWeek: {
   		type: 'integer'
   	},
-  	startDT: {
-  		type: 'datetime'
+  	start: {
+  		type: 'json',
+  		required: true
   	},
-  	endDT: {
-  		type: 'datetime'
+  	end: {
+  		type: 'json',
+  		required: true
+  	},
+  	recurrence: {
+  		type: 'array',
+  		defaultsTo: []
+  	},
+  	attendees: {
+  		type: 'array',
+  		defaultsTo: []
+  	},
+  	reminders: {
+  		type: 'json',
+  		required: true
   	}
   }
 };

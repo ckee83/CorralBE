@@ -18,10 +18,6 @@ module.exports = {
   		defaultsTo: 'My Schedule',
   		required: true
   	},
-  	weekOrMonth: {
-  		type: 'boolean',
-  		defaultsTo: false
-  	},
   	entries: {
   		collection: 'scheduleentry',
   		via: 'scheduleID'
