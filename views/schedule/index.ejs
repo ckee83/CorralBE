@@ -116,7 +116,7 @@
 							<td class="dayWidth">
 								<% for (var dayInd=0, curDay=curEntries[entryInd], timeInd=0; dayInd<curDay.length; dayInd++) { %>
 									<% if (timeInd<curDay[dayInd].start.dateTime) {} %>
-									<div class="entryBlock bg-<%= curDay[dayInd].color %>" style="height: <%= curDay[dayInd].duration/2 %>px;" >
+									<div class="entryBlock bg-<%= curDay[dayInd].color %>" style="height: <%= curDay[dayInd].duration/2 %>px;" title="<%= curDay[dayInd].description %>">
 										<div class="entryDel">
 											<form action="/scheduleentry/delete/<%= req.params.id %>" method="POST">
 												<input type="hidden" name="entryID" value="<%= curDay[dayInd].id %>">
@@ -127,7 +127,9 @@
 										<div class="entryTitle">
 											<%= curDay[dayInd].summary %>
 										</div>
-										<%= curDay[dayInd].startTime %> - <%= curDay[dayInd].endTime %>
+										<div style="line-height: <%= curDay[dayInd].duration/2-20 %>px;">
+											<%= curDay[dayInd].startTime %> - <%= curDay[dayInd].endTime %>
+										</div>
 									</div>
 								<% } %>
 							</td>
