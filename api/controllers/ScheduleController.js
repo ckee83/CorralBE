@@ -21,7 +21,7 @@ module.exports = {
 				return next(err);
 			for (var ind=0; ind<schedules.length; ind++){
 				var entries = schedules[ind].entries;
-				for (var i=0; i<entries.length; i++){
+				for (var i=0, added=0; i<entries.length-added; i++){
 					entries[i].start.dateTime = new Date(entries[i].start.dateTime);
 					entries[i].end.dateTime = new Date(entries[i].end.dateTime);
 					var durationMins = (entries[i].end.dateTime-entries[i].start.dateTime)/60000;
@@ -37,6 +37,7 @@ module.exports = {
 					entries[i].color=color;
 					entries[i].startTime = formatAMPM(entries[i].start.dateTime);
 					if ((entries[i].start.dateTime.getDay()+1)%7==entries[i].end.dateTime.getDay()){
+						added++;
 						var tstartDT = new Date(entries[i].start.dateTime.getFullYear(), entries[i].start.dateTime.getMonth(), entries[i].start.dateTime.getDate()+1,0,0,0,0);
 						var tendDT = new Date(entries[i].end.dateTime);
 						var partTwo={
@@ -55,8 +56,9 @@ module.exports = {
 							startTime: formatAMPM(tstartDT),
 							endTime: formatAMPM(tendDT),
 							recurrence: entries[i].recurrence,
-							reminders: entries[i].reminders
+							reminders: entries[i].reminders,
 						};
+						partTwo.duration=Math.round((partTwo.end.dateTime-partTwo.start.dateTime)/60000)
 						entries.push(partTwo);
 						entries[i].endTime=formatAMPM(tstartDT),
 						entries[i].duration=Math.round((partTwo.start.dateTime-entries[i].start.dateTime)/60000);
