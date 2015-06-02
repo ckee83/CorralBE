@@ -36,8 +36,8 @@ module.exports = {
 						color='danger';
 					entries[i].color=color;
 					entries[i].startTime = formatAMPM(entries[i].start.dateTime);
-					if (entries[i].start.dateTime.getDay() < entries[i].end.dateTime.getDay()){
-						var tstartDT = new Date(entries[i].start.dateTime.getFullYear(), entries[i].start.dateTime.getMonth(), entries[i].end.dateTime.getDate(),0,0,0,0);
+					if ((entries[i].start.dateTime.getDay()+1)%7==entries[i].end.dateTime.getDay()){
+						var tstartDT = new Date(entries[i].start.dateTime.getFullYear(), entries[i].start.dateTime.getMonth(), entries[i].start.dateTime.getDate()+1,0,0,0,0);
 						var tendDT = new Date(entries[i].end.dateTime);
 						var partTwo={
 							id: entries[i].id,
