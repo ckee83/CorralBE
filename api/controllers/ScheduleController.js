@@ -26,7 +26,6 @@ module.exports = {
 					entries[i].startDT = new Date(entries[i].startDT);
 					entries[i].endDT = new Date(entries[i].endDT);
 					var durationMins = (entries[i].endDT-entries[i].startDT)/60000;
-					entries[i].duration = durationMins;
 					var color = '';
 					if (durationMins/60>6)
 						color='success';
@@ -47,12 +46,42 @@ module.exports = {
 					entries[i].startTime = tHour+':'+tMins+' '+tAMPM;
 					tHour=entries[i].endDT.getHours()%12==0?12:entries[i].endDT.getHours()%12;
 					tMins=('0'+entries[i].endDT.getMinutes()).slice(-2);
-					tAMPM;
 					if (entries[i].endDT.getHours()+1<12)
 						tAMPM='AM';
 					else 
 						tAMPM='PM';
-					entries[i].endTime = tHour+':'+tMins+' '+tAMPM;
+					if (entries[i].startDT.getDay() < entries[i].endDT.getDay()){
+						var tstartDT = new Date(entries[i].startDT.getFullYear(), entries[i].startDT.getMonth(), entries[i].endDT.getDate(),0,0,0,0);
+						var tendDT = new Date(entries[i].endDT);
+						var partTwo={
+							id: entries[i].id,
+							startDT: tstartDT,
+							endDT: tendDT,
+							description: entries[i].description,
+							dayOfWeek: (entries[i].dayOfWeek+1)%7,
+							color: entries[i].color,
+							startTime: '12:00 AM',
+							endTime: tHour+':'+tMins+' '+tAMPM
+						};
+						entries.push(partTwo);
+						entries[i].endTime='12:00 AM';
+						entries[i].duration=Math.round((partTwo.startDT-entries[i].startDT)/60000);
+						// partTwo.startDT.setHours(0);
+						// partTwo.startDT.setMinutes(0);
+						// partTwo.startDT.setDate(partTwo.startDT.getDate());
+						// durationMins=(partTwo.startDT-entries[i].startDT)/60000;
+						// entries[i].duration = durationMins;
+						// entries[i].endTime = '12:00 AM';
+						// durationMins=(partTwo.endDT-partTwo.startDT)/60000;
+						// partTwo.duration=durationMins;
+						// entries.push(partTwo);
+						// console.log('Double Entry: '+entries[i]);
+						// console.log('Double Entry2: '+partTwo);
+					}
+					else {
+						entries[i].duration = Math.round(durationMins);
+						entries[i].endTime = tHour+':'+tMins+' '+tAMPM;
+					}
 				}
 				entries.sort(function(a,b){
 					if (a.startDT<b.startDT)
