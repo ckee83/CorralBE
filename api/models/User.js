@@ -45,6 +45,27 @@ module.exports = {
     schedule: {
       collection: 'schedule',
       via: 'userID'
+    },
+    getAvailability: function(){
+      var avail = this.availability;
+      if (avail.status==-2 || avail.status==2)
+        return avail.status;
+      else if (avail.status==-1 || avail.status==1){
+        if (new Date()<new Date(avail.endDT))
+          return avail.status;
+      }
+      return 0;
+    },
+    getTimeLeft: function(){
+      var avail = this.availability;
+      if (avail.status == -2 || avail.status == 2)
+        return 0;
+      var DT = new Date(avail.endDT);
+      var diff = DT - new Date();
+      if (diff<0)
+        return 0;
+      else
+        return new Date(diff).getMinutes();
     }
   },
   beforeCreate: function(values, next){

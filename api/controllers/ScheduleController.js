@@ -7,12 +7,16 @@
 
 module.exports = {
 	create: function(req, res, next){
-		var sch = {
-			userID: req.params.id,
-			title: req.param('title')
-		};
-		Schedule.create(sch,function(err, schedule){
-			res.redirect('/schedule/index/'+req.params.id);
+		var userID = req.params.id;
+		Schedule.update({userID: userID}, {isDefault: false}, function(err, schedules){
+			var sch = {
+				userID: userID,
+				title: req.param('title'),
+				isDefault: true
+			};
+			Schedule.create(sch,function(err, schedule){
+				res.redirect('/schedule/index/'+req.params.id);
+			});
 		});
 	},
 	index: function(req, res, next){
@@ -88,6 +92,15 @@ module.exports = {
 	delete: function(req, res, next){
 		Schedule.destroy(req.param('schID'),function(err, schedules){
 			ScheduleEntry.destroy({scheduleID: schedules[0].id},function(err,entries){
+				res.redirect('/schedule/index/'+req.params.id);
+			});
+		});
+	},
+	makeDefault: function(req, res, next){
+		Schedule.update({userID: req.params.id},{isDefault: false},function(err,schedules){
+			console.log(schedules);
+			Schedule.update(req.param('schID'),{isDefault:true},function(err, defSchedule){
+				console.log(defSchedule);
 				res.redirect('/schedule/index/'+req.params.id);
 			});
 		});

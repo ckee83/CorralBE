@@ -18,6 +18,11 @@ module.exports = {
   		defaultsTo: 'My Schedule',
   		required: true
   	},
+  	isDefault: {
+  		type: 'boolean',
+  		defaultsTo: false,
+  		required: true
+  	},
   	entries: {
   		collection: 'scheduleentry',
   		via: 'scheduleID'

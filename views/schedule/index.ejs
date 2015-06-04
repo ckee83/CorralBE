@@ -87,7 +87,19 @@
 							</form>
 						</div>
 			  		</td>
-			  		<td colspan="5"></td>
+			  		<td colspan="5">
+			  			<div class="centerText">
+			  			<% if (schedules[i].isDefault) { %>
+			  				<button type="submit" class="btn btn-success">Current Default</button>
+			  			<% } else { %>
+						    <form action="/schedule/makeDefault/<%= req.params.id %>" method="POST">
+								<input type="hidden" name="schID" value="<%= schedules[i].id %>">
+			      				<input type="hidden" name="_csrf" value="<%= _csrf %>"/>
+					        	<button type="submit" class="btn btn-primary">Set as Default</button>
+						    </form>
+			  			<% } %>
+					    </div>
+			  		</td>
 			  		<td>
 			  			<div class="centerText">
 						    <form action="/schedule/delete/<%= req.params.id %>" method="POST">
