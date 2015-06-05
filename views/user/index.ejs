@@ -7,8 +7,8 @@
 				<th>Email</th>
 				<th>Mood</th>
 				<th>Type</th>
-				<th>Member Since</th>
-				<th>Last Updated</th>
+				<th class="hidden-sm hidden-xs">Member Since</th>
+				<th class="hidden-sm hidden-xs">Last Updated</th>
 				<th class="indexButtons"></th>
 			</tr>
 			<% for (var i=0; i<users.length; i++){ %>
@@ -18,8 +18,8 @@
 					<td><%= users[i].email %></td>
 					<td><%= users[i].mood %></td>
 					<td><% if (users[i].admin) { %>Admin<% } else { %>User <% } %> </td>
-					<td><%= users[i].createdAt.toDateString() %></td>
-					<td><%= users[i].updatedAt.toDateString() %></td>
+					<td class="hidden-sm hidden-xs"><%= users[i].createdAt.toDateString() %></td>
+					<td class="hidden-sm hidden-xs"><%= users[i].updatedAt.toDateString() %></td>
 					<td class="indexButtons">
 						<a class="btn btn-primary btn-xs" href="../user/show/<%= users[i].id %>">Show</a>
 						<a class="btn btn-success btn-xs" href="../user/edit/<%= users[i].id %>">Edit</a>
