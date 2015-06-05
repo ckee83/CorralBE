@@ -141,6 +141,7 @@ module.exports = {
 			},
 			function(friendsList, cb){
 				for (var i=0; i<friendsList.length; i++){
+					console.log('Working on: '+friendsList[i].firstName);
 					var curFriend = friendsList[i];
 					var avail = friendsList[i].availability;
 					// Timed Free Mode
@@ -154,12 +155,17 @@ module.exports = {
 					// Schedule Mode
 					// Need to sync reading the entries and adding appropriate friends to list
 					else {
-						Schedule.findOne({userID: friendsList[i].id, isDefault: true}).populate('entries').exec(function(err, sch){
-							if (!sch)
+						var baseCheckDT = getDTtoBase(checkDT);
+						Schedule.findOne({userID: curFriend.id, isDefault: true})
+							.populate('entries',{start: {dateTime: {'<': baseCheckDT}},end: {dateTime: {'>': baseCheckDT}}}).exec(function(err, sch){
+							console.log('Schedule: ');
+							console.log(sch);
+							if (!sch){
+								console.log('No Schedule pushed: '+curFriend.firstName);
 								availFriends.push(curFriend);
+							}
 							else {
 								var entries = sch.entries;
-								var baseCheckDT = getDTtoBase(checkDT);
 								var isFree=true;
 								for (var i=0; i<entries.length; i++){
 									var startDT = new Date(entries[i].start.dateTime);
@@ -169,6 +175,7 @@ module.exports = {
 										isFree=false;
 								}
 								if (isFree){
+									console.log('No Conflict pushed: '+curFriend.firstName);
 									availFriends.push(curFriend);
 								}
 							}
@@ -178,6 +185,7 @@ module.exports = {
 				cb(null, availFriends);
 			}
 		],function(err, result){
+			console.log('Result: ');
 			console.log(result);
 		});
 	}
