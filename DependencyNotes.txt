@@ -1,9 +1,0 @@
-Bcrypt depends on node-gyp, Visual Studio (express works), and Python 2.7
-
-You will have to do the following:
-
-- Install Python 2.7
-- Install Visual Studio
-- Install node-gyp using 'npm install -g node-gyp --save'
-	*If it complains that Python isn't found, you can use the following to set the path:
-		node-gyp --python /path/to/python2.7
